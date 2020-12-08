@@ -1,17 +1,22 @@
-import React from 'react'
+import React from "react";
+import { useParams } from "react-router-dom";
 
- function MessageDetails({message}){
+function Child({messageObj}) {
+  let { subjectID } = useParams();
 
-  
+  // let splitter=subjectID.split(' ')
 
-  return(
+  // let messageHolder=[messageObj];
+  // console.log(messageHolder)
+
+  // let exactMessage=messageHolder.filter(item =>item.subject.includes(splitter[0]))
+
+
+  return (
     <div>
-      <h1>Your Email Messages</h1>
-      <section>
-        
-      </section>
+      <h3>Your Message Details: {subjectID}</h3>
     </div>
-  )
+  );
 }
 
-export default MessageDetails
+export default Child

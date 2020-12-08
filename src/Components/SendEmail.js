@@ -6,16 +6,15 @@ class SendEmail extends Component{
     super(props);
     this.state = {
       composeEmail:{
-        sender:'checkpoint@sdi.com',
-        recipient:'placeholder',
-        subject:'placeholder',
-        message:'placeholder'}
+        sender:'',
+        recipient:'',
+        subject:'',
+        message:''}
       };
   }
-  mySubmitHandler = (event) => {
-    event.preventDefault();
+  mySubmitHandler = () => {
     fetch('http://localhost:3001/send', {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
