@@ -1,25 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import { Component } from 'react';
+import Messages from '../src/Components/Messages'
+import SendEmail from '../src/Components/SendEmail'
 
-function App() {
+
+class App extends Component{
+  constructor(){
+    super()
+    this.state={
+      emails:[]
+    }
+  }
+
+  componentDidMount(){
+    fetch("http://localhost:3001/emails",{
+      mode:'cors'
+    })
+    .then(promise => promise.json())
+    .then(data =>{
+      this.setState({emails:data})
+    })
+  }
+
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+     <Messages messageObj = { this.state.emails } />
+     <SendEmail/>
+    </>
+   
+
+  )};
 }
 
 export default App;
