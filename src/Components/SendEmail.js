@@ -1,60 +1,72 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link, Switch, useRouteMatch } from "react-router-dom";
 
-const error="Sad Face, your put request failed lol"
-
- class SendEmail extends Component{
-constructor(){
-  super()
-  this.state={
-    value:''
+class SendEmail extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      composeEmail:{
+        sender:'checkpoint@sdi.com',
+        recipient:'placeholder',
+        subject:'placeholder',
+        message:'placeholder'}
+      };
   }
-  this.handleChange = this.handleChange.bind(this);
-  this.handleSubmit = this.postEmail.bind(this);
-}
+  mySubmitHandler = (event) => {
+    event.preventDefault();
+    fetch('http://localhost:3001/send', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.composeEmail),
+    })
+    .then(promise => promise.json())
+    .then(data => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    })
 
-handleChange(event) {
-  this.setState({value: event.target.value});
-}
-
-postEmail(){
-  fetch('http://localhost:3001/emailse', {
-  method: 'PUT', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(this.state.value),
-})
-.then(response => response.json())
-.then(data => {
-  console.log('Success:', data);
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
-
-alert('A email was sent: ' + this.state.value);
-}
-
-render(){
-  return(
-
-    <div>
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Compose Email
-          From:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-          Subject:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-          Body
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
+    console.log()
+  }
+  myChangeHandler = (event) => {
+    this.setState({composeEmail:{
+      sender:'checkpoint@sdi.com',
+      recipient:'placeholder',
+      subject: event.target.value,
+      message:'placeholder',
+      date:'placeholder',
+      id:'900'}
+    });
+  }
+  render() {
+    return (
+      <form onSubmit={this.mySubmitHandler}>
+      <h1>Submit Email</h1>
+      <p>Enter your subject, and submit:</p>
+      <p>From: checkpoint@sdi.com</p>
+      <input
+        type='text'
+        onChange={this.myChangeHandler}
+        value={this.state.message}
+      />
+      <input
+        type='submit'
+      />
       </form>
-    </div>
-  )
+    );
+  }
 }
-}
+
+
+
+
+
+
+
+
+
 
 export default SendEmail
