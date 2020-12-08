@@ -8,7 +8,7 @@ import Child from './MessageDetails'
 
 
 
-  const emailMessages=messageObj.map(item=> {return `Subject: ${item.subject} \n From: ${item.sender}`})
+  const emailMessages=messageObj.map(item=> {return `Subject: ${item.subject} \n From: ${item.sender}`}) //how coudl i do this better so that I can send more information into the router??
 
   return(
     
